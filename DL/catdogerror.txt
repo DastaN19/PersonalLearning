@@ -1,0 +1,38 @@
+Epoch 1/50
+WARNING:tensorflow:Layers in a Sequential model should only have a single input tensor. Received: inputs=(<tf.Tensor 'IteratorGetNext:0' shape=(32, 64, 64, 3) dtype=float32>, <tf.Tensor 'IteratorGetNext:1' shape=(32,) dtype=float32>). Consider rewriting this model with the Functional API.
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-12-f21d727e6c70> in <module>
+----> 1 model.fit(training_data, epochs = 50 , batch_size =32)
+
+1 frames
+/usr/local/lib/python3.7/dist-packages/tensorflow/python/framework/func_graph.py in autograph_handler(*args, **kwargs)
+   1145           except Exception as e:  # pylint:disable=broad-except
+   1146             if hasattr(e, "ag_error_metadata"):
+-> 1147               raise e.ag_error_metadata.to_exception(e)
+   1148             else:
+   1149               raise
+
+ValueError: in user code:
+
+    File "/usr/local/lib/python3.7/dist-packages/keras/engine/training.py", line 1021, in train_function  *
+        return step_function(self, iterator)
+    File "/usr/local/lib/python3.7/dist-packages/keras/engine/training.py", line 1010, in step_function  **
+        outputs = model.distribute_strategy.run(run_step, args=(data,))
+    File "/usr/local/lib/python3.7/dist-packages/keras/engine/training.py", line 1000, in run_step  **
+        outputs = model.train_step(data)
+    File "/usr/local/lib/python3.7/dist-packages/keras/engine/training.py", line 859, in train_step
+        y_pred = self(x, training=True)
+    File "/usr/local/lib/python3.7/dist-packages/keras/utils/traceback_utils.py", line 67, in error_handler
+        raise e.with_traceback(filtered_tb) from None
+    File "/usr/local/lib/python3.7/dist-packages/keras/engine/input_spec.py", line 200, in assert_input_compatibility
+        raise ValueError(f'Layer "{layer_name}" expects {len(input_spec)} input(s),'
+
+    ValueError: Exception encountered when calling layer "sequential" (type Sequential).
+    
+    Layer "conv2d" expects 1 input(s), but it received 2 input tensors. Inputs received: [<tf.Tensor 'IteratorGetNext:0' shape=(32, 64, 64, 3) dtype=float32>, <tf.Tensor 'IteratorGetNext:1' shape=(32,) dtype=float32>]
+    
+    Call arguments received:
+      • inputs=('tf.Tensor(shape=(32, 64, 64, 3), dtype=float32)', 'tf.Tensor(shape=(32,), dtype=float32)')
+      • training=True
+      • mask=None
